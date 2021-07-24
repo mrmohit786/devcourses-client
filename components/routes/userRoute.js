@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../context';
+import UserNav from '../nav/UserNav';
 
 const UserRoute = ({ children }) => {
   const router = useRouter();
@@ -33,7 +34,14 @@ const UserRoute = ({ children }) => {
           className='d-flex justify-content-center display-1 text-primary p-5'
         />
       ) : (
-        <>{children}</>
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-md-2'>
+              <UserNav />
+            </div>
+            <div className='col-md-10'>{children}</div>
+          </div>
+        </div>
       )}
     </>
   );

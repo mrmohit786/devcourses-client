@@ -1,9 +1,11 @@
 import { Menu } from 'antd';
 import {
   AppstoreOutlined,
+  CarryOutOutlined,
   CoffeeOutlined,
   LoginOutlined,
   LogoutOutlined,
+  TeamOutlined,
   UserAddOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
@@ -49,6 +51,27 @@ const Header = () => {
           <a>App</a>
         </Link>
       </Item>
+      {user?.role && user.role.includes('Instructor') ? (
+        <Item
+          key='/instructor/course/create'
+          onClick={e => setCurrent(e.key)}
+          icon={<CarryOutOutlined />}
+        >
+          <Link href='/instructor/course/create'>
+            <a>Create Course</a>
+          </Link>
+        </Item>
+      ) : (
+        <Item
+          key='/user/become-instructor'
+          onClick={e => setCurrent(e.key)}
+          icon={<TeamOutlined />}
+        >
+          <Link href='/user/become-instructor'>
+            <a>Become Instructor</a>
+          </Link>
+        </Item>
+      )}
       {user === null ? (
         <>
           <Item

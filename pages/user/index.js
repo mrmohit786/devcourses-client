@@ -8,9 +8,7 @@ const UserIndex = () => {
   } = useContext(Context);
   return (
     <UserRoute>
-      <h1 className='jumbotron text-center bg-primary square'>
-        <pre>{JSON.stringify(user, null, 4)}</pre>
-      </h1>
+      <h1 className='jumbotron text-center bg-primary square'>Dashboard</h1>
     </UserRoute>
   );
 };

@@ -19,8 +19,8 @@ const Register = () => {
   }, [user]);
 
   const [name, setName] = useState('Mohit');
-  const [email, setEmail] = useState('mohit@gmail.com');
-  const [password, setPassword] = useState('warrior786');
+  const [email, setEmail] = useState('patelmohit719@gmail.com');
+  const [password, setPassword] = useState('Jack@123');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async e => {
@@ -33,6 +33,9 @@ const Register = () => {
         password,
       });
       toast.dark('Registration successful, Please login');
+      setName('');
+      setEmail('');
+      setPassword('');
       setLoading(false);
     } catch (error) {
       toast.dark(error?.response?.data?.error || 'Something went wrong');

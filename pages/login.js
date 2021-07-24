@@ -12,8 +12,8 @@ const Login = () => {
     dispatch,
   } = useContext(Context);
   const router = useRouter();
-  const [email, setEmail] = useState('mohit@gmail.com');
-  const [password, setPassword] = useState('warrior786');
+  const [email, setEmail] = useState('patelmohit719@gmail.com');
+  const [password, setPassword] = useState('Jack@123');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -30,10 +30,12 @@ const Login = () => {
         email,
         password,
       });
+      setEmail('');
+      setPassword('');
       dispatch({ type: 'LOGIN', payload: response.data });
       window.localStorage.setItem('user', JSON.stringify(response.data));
       toast.dark('Login successfully');
-      router.push('/');
+      router.push('/user');
       setLoading(false);
     } catch (error) {
       toast.dark(error?.response?.data?.error || 'Something went wrong');
@@ -48,7 +50,6 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <input
             type='email'
-            name=''
             className='form-control mb-4 p-4'
             value={email}
             placeholder='Enter Email'
@@ -58,7 +59,6 @@ const Login = () => {
           />
           <input
             type='password'
-            name=''
             className='form-control mb-4 p-4'
             value={password}
             placeholder='Enter Password'
@@ -78,6 +78,12 @@ const Login = () => {
           Not yet registered?{' '}
           <Link href='/register'>
             <a>Register</a>
+          </Link>
+        </p>
+        <p className='text-center'>
+          Forgot password?{' '}
+          <Link href='/forgot-password'>
+            <a className='text-danger'>Reset here</a>
           </Link>
         </p>
       </div>

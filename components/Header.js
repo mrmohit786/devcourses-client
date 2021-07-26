@@ -40,7 +40,7 @@ const Header = () => {
   };
 
   return (
-    <Menu mode='horizontal' selectedKeys={[current]}>
+    <Menu className="mb-2" mode='horizontal' selectedKeys={[current]}>
       <Item
         key='/'
         onClick={e => setCurrent(e.key)}
@@ -64,11 +64,23 @@ const Header = () => {
       ) : (
         <Item
           key='/user/become-instructor'
+          className='float-right'
           onClick={e => setCurrent(e.key)}
           icon={<TeamOutlined />}
         >
           <Link href='/user/become-instructor'>
             <a>Become Instructor</a>
+          </Link>
+        </Item>
+      )}
+      {user?.role?.includes('Instructor') && (
+        <Item
+          key='/instructor'
+          onClick={e => setCurrent(e.key)}
+          icon={<CarryOutOutlined />}
+        >
+          <Link href='/instructor'>
+            <a>Instructor</a>
           </Link>
         </Item>
       )}

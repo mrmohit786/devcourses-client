@@ -6,3 +6,7 @@
   background: linear-gradient(#e66465, #9198e5);
   color: #fff;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

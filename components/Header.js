@@ -40,39 +40,39 @@ const Header = () => {
   };
 
   return (
-    <Menu className="mb-2" mode='horizontal' selectedKeys={[current]}>
+    <Menu className='mb-2' mode='horizontal' selectedKeys={[current]}>
       <Item
         key='/'
         onClick={e => setCurrent(e.key)}
         icon={<AppstoreOutlined />}
       >
-        {/* use href instead of to */}
         <Link href='/'>
           <a>App</a>
         </Link>
       </Item>
-      {user?.role && user.role.includes('Instructor') ? (
-        <Item
-          key='/instructor/course/create'
-          onClick={e => setCurrent(e.key)}
-          icon={<CarryOutOutlined />}
-        >
-          <Link href='/instructor/course/create'>
-            <a>Create Course</a>
-          </Link>
-        </Item>
-      ) : (
-        <Item
-          key='/user/become-instructor'
-          className='float-right'
-          onClick={e => setCurrent(e.key)}
-          icon={<TeamOutlined />}
-        >
-          <Link href='/user/become-instructor'>
-            <a>Become Instructor</a>
-          </Link>
-        </Item>
-      )}
+      {user &&
+        (user?.role && user.role.includes('Instructor') ? (
+          <Item
+            key='/instructor/course/create'
+            onClick={e => setCurrent(e.key)}
+            icon={<CarryOutOutlined />}
+          >
+            <Link href='/instructor/course/create'>
+              <a>Create Course</a>
+            </Link>
+          </Item>
+        ) : (
+          <Item
+            key='/user/become-instructor'
+            className='float-right'
+            onClick={e => setCurrent(e.key)}
+            icon={<TeamOutlined />}
+          >
+            <Link href='/user/become-instructor'>
+              <a>Become Instructor</a>
+            </Link>
+          </Item>
+        ))}
       {user?.role?.includes('Instructor') && (
         <Item
           key='/instructor'

@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import InstructorRoute from '../../../components/routes/InstructorRoute';
-import CourseCreateForm from '../../../components/forms/CourseCreateForm';
+import { useEffect, useState } from 'react';
+import InstructorRoute from '../../../../components/routes/InstructorRoute';
+import CourseCreateForm from '../../../../components/forms/CourseCreateForm';
 import ImageResizer from 'react-image-file-resizer';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { message } from 'antd';
 import { useRouter } from 'next/router';
 
-const CourseCreate = () => {
+const CourseEdit = () => {
   const [values, setValues] = useState({
     name: '',
     description: '',
@@ -21,7 +21,27 @@ const CourseCreate = () => {
   const [image, setImage] = useState({});
   const [preview, setPreview] = useState('');
   const [uploadButtonText, setUploadButtonText] = useState('Upload Image');
+
   const router = useRouter();
+  const { slug } = router.query;
+
+  useEffect(() => {
+    if (slug) {
+      loadCourse();
+    }
+  }, [slug]);
+
+  const loadCourse = async () => {
+    try {
+      const { data } = await axios.get(`/api/course/${slug}`);
+      const { name, description, price, paid, category, image } = data;
+
+      setValues({ ...values, name, description, price, paid, category });
+      setImage(image);
+    } catch (error) {
+      toast.dark('Problem in fetching course');
+    }
+  };
 
   const handleChange = e => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -72,12 +92,11 @@ const CourseCreate = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/api/course', {
+      const { data } = await axios.put('/api/course', {
         ...values,
         image,
       });
-      toast.dark('Great! Now you can start adding lessons');
-      router.push('/instructor');
+      toast.dark('Course updated');
     } catch (error) {
       toast.dark('Something went wrong, Try again');
     }
@@ -85,7 +104,7 @@ const CourseCreate = () => {
 
   return (
     <InstructorRoute>
-      <h1 className='jumbotron text-center bg-primary'>Create Course</h1>
+      <h1 className='jumbotron text-center bg-primary'>Update Course</h1>
       <div className='pt-3 pb-3'>
         <CourseCreateForm
           values={values}
@@ -97,10 +116,11 @@ const CourseCreate = () => {
           uploadButtonText={uploadButtonText}
           handleImageRemove={handleImageRemove}
           image={image}
+          edit
         />
       </div>
     </InstructorRoute>
   );
 };
 
-export default CourseCreate;
+export default CourseEdit;

@@ -46,7 +46,7 @@ const CourseCreateForm = ({
               value={values.paid}
               style={{ width: '100%' }}
               size='large'
-              onChange={v => setValues({ ...values, paid: !values.paid })}
+              onChange={v => setValues({ ...values, paid: v, price: 0 })}
             >
               <Option value={true}>Paid</Option>
               <Option value={false}>Free</Option>
@@ -57,7 +57,7 @@ const CourseCreateForm = ({
           <div className='form-group'>
             <Select
               defaultValue='$9.99'
-              style={{ widht: '100%' }}
+              style={{ width: '100%' }}
               onChange={v => setValues({ ...values, price: v })}
               tokenSeparators={[,]}
               size='large'

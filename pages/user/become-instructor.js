@@ -21,11 +21,9 @@ const BecomeInstructor = () => {
     try {
       setLoading(true);
       const { data } = await axios.post('/api/make-instructor');
-      console.log(data);
       setLoading(false);
       window.location.href = data;
     } catch (error) {
-      console.log(error.response.status);
       toast.dark('Stripe onboarding failed, try again');
       setLoading(false);
     }

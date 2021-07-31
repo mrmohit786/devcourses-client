@@ -5,6 +5,7 @@ import ImageResizer from 'react-image-file-resizer';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { message } from 'antd';
+import { useRouter } from 'next/router';
 
 const CourseCreate = () => {
   const [values, setValues] = useState({
@@ -20,6 +21,7 @@ const CourseCreate = () => {
   const [image, setImage] = useState({});
   const [preview, setPreview] = useState('');
   const [uploadButtonText, setUploadButtonText] = useState('Upload Image');
+  const router = useRouter();
 
   const handleChange = e => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -42,7 +44,6 @@ const CourseCreate = () => {
         message.success({ content: 'Uploaded!', key, duration: 2 });
         setValues({ ...values, loading: false });
       } catch (error) {
-        console.log(error);
         message.error('Image upload failed, Try later');
         setValues({ ...values, loading: false });
       }
@@ -63,14 +64,23 @@ const CourseCreate = () => {
 
       message.success({ content: 'Removed!', key, duration: 2 });
     } catch (error) {
-      console.log(error);
       message.error('Failed to remove image, Try again');
       setValues({ ...values, loading: false });
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/course', {
+        ...values,
+        image,
+      });
+      toast.dark('Great! Now you can start adding lessons');
+      router.push('/instructor');
+    } catch (error) {
+      toast.dark('Something went wrong, Try again');
+    }
   };
 
   return (

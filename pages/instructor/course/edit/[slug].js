@@ -213,6 +213,7 @@ const CourseEdit = () => {
         toast.dark("Lesson update failed");
       });
 
+    setProgress(0);
     setUploadVideoButtonText("Upload Video");
     setVisible(false);
 

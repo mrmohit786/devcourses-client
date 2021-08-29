@@ -1,4 +1,10 @@
-import { CheckOutlined, EditOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  EditOutlined,
+  QuestionOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { Avatar, Button, Tooltip, Modal, List } from "antd";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -97,15 +103,57 @@ const CourseView = () => {
         values
       );
       setValues({ ...values, title: "", content: "", video: {} });
+      setProgress(0);
+      setUploadButtonText("Upload video");
       setVisible(false);
       setSavingLesson(false);
-      setUploadButtonText("Upload video");
       setCourse(data);
       toast.dark("Lesson added");
     } catch (error) {
       setSavingLesson(false);
       toast.dark("Lesson add failed, Try again");
     }
+  };
+
+  const handlePublish = async (e, courseId) => {
+    e.preventDefault();
+
+    let answer = window.confirm(
+      "Once you publish your course, it will be live in the marketplace for users to enroll"
+    );
+
+    if (!answer) {
+      return;
+    }
+
+    const { data } = await axios
+      .put(`/api/course/publish/${courseId}`)
+      .catch(() => {
+        toast.dark("Course published failed");
+      });
+    debugger;
+    setCourse(data);
+    toast.dark("Your course is live on marketplace");
+  };
+
+  const handleUnpublish = async (e, courseId) => {
+    e.preventDefault();
+    let answer = window.confirm(
+      "Once you unpublish your course, it will be no longer be available for users to enroll"
+    );
+
+    if (!answer) {
+      return;
+    }
+
+    const { data } = await axios
+      .put(`/api/course/unpublish/${courseId}`)
+      .catch(() => {
+        toast.dark("Course unpublished failed");
+      });
+
+    setCourse(data);
+    toast.dark("Your course is successfully unpublished");
   };
 
   return (
@@ -143,12 +191,26 @@ const CourseView = () => {
                         className='h5 cursor-pointer text-warning mr-4'
                       />
                     </Tooltip>
-                    <Tooltip
-                      title='Publish'
-                      className='h5 cursor-pointer text-danger'
-                    >
-                      <CheckOutlined />
-                    </Tooltip>
+
+                    {course.lessons && course.lessons.length < 5 ? (
+                      <Tooltip title='Min 5 lessons required to publish'>
+                        <QuestionOutlined className='h4 pointer text-danger' />
+                      </Tooltip>
+                    ) : course.published ? (
+                      <Tooltip title='Unpublish'>
+                        <CloseOutlined
+                          onClick={(e) => handleUnpublish(e, course._id)}
+                          className='h4 pointer text-danger'
+                        />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title='Publish'>
+                        <CheckOutlined
+                          onClick={(e) => handlePublish(e, course._id)}
+                          className='h4 pointer text-success'
+                        />
+                      </Tooltip>
+                    )}
                   </div>
                 </div>
               </div>

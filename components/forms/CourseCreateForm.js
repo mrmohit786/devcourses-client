@@ -1,5 +1,5 @@
-import { Select, Button, Avatar, Badge } from 'antd';
-import { isEmpty } from 'lodash';
+import { Select, Button, Avatar, Badge } from "antd";
+import { isEmpty } from "lodash";
 
 const { Option } = Select;
 
@@ -12,8 +12,7 @@ const CourseCreateForm = ({
   preview,
   uploadButtonText,
   handleImageRemove,
-  edit = false,
-  image,
+  edit = false
 }) => {
   const children = [];
   for (let i = 9.99; i <= 99.99; i++) {
@@ -49,9 +48,9 @@ const CourseCreateForm = ({
               <div className='form-group'>
                 <Select
                   value={values.paid}
-                  style={{ width: '100%' }}
+                  style={{ width: "100%" }}
                   size='large'
-                  onChange={v => setValues({ ...values, paid: v, price: 0 })}
+                  onChange={(v) => setValues({ ...values, paid: v, price: 0 })}
                 >
                   <Option value={true}>Paid</Option>
                   <Option value={false}>Free</Option>
@@ -62,8 +61,8 @@ const CourseCreateForm = ({
               <div className='form-group'>
                 <Select
                   defaultValue='$9.99'
-                  style={{ width: '100%' }}
-                  onChange={v => setValues({ ...values, price: v })}
+                  style={{ width: "100%" }}
+                  onChange={(v) => setValues({ ...values, price: v })}
                   tokenSeparators={[,]}
                   size='large'
                 >
@@ -77,14 +76,13 @@ const CourseCreateForm = ({
             <div className='col'>
               <div className='form-group'>
                 <label className='btn btn-outline-secondary btn-block text-left'>
-                  {!isEmpty(image) ? 'Image uploaded' : uploadButtonText}
+                  {uploadButtonText}
                   <input
                     type='file'
                     name='image'
                     onChange={handleImageUpload}
                     accept='image/*'
                     hidden
-                    disabled={image}
                   />
                 </label>
               </div>
@@ -100,14 +98,8 @@ const CourseCreateForm = ({
               </Badge>
             )}
 
-            {edit && image && (
-              <Badge
-                count='X'
-                onClick={handleImageRemove}
-                className='cursor-pointer'
-              >
-                <Avatar width={200} src={image?.Location} />
-              </Badge>
+            {edit && values.image && (
+              <Avatar width={200} src={values.image.Location} />
             )}
           </div>
           <div className='form-group'>
@@ -136,7 +128,7 @@ const CourseCreateForm = ({
                   !values.description
                 }
               >
-                {values.loading ? 'Saving...' : 'Save & Continue'}
+                {values.loading ? "Saving..." : "Save & Continue"}
               </Button>
             </div>
           </div>

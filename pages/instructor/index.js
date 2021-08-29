@@ -26,7 +26,7 @@ const InstructorIndex = () => {
     <InstructorRoute>
       <h1 className='jumbotron text-center bg-primary'>Instructor Dashboard</h1>
       {courses &&
-        courses.map(course => (
+        courses?.map(course => (
           <>
             <div className='media pt-2'>
               <Avatar

@@ -1,13 +1,14 @@
-import { CheckOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Tooltip, Modal, List } from 'antd';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import InstructorRoute from '../../../../components/routes/InstructorRoute';
-import ReactMarkdown from 'react-markdown';
-import AddLessonForm from '../../../../components/forms/AddLessonForm';
-import Item from 'antd/lib/list/Item';
+import { CheckOutlined, EditOutlined, UploadOutlined } from "@ant-design/icons";
+import { Avatar, Button, Tooltip, Modal, List } from "antd";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import InstructorRoute from "../../../../components/routes/InstructorRoute";
+import ReactMarkdown from "react-markdown";
+import AddLessonForm from "../../../../components/forms/AddLessonForm";
+
+const { Item } = List;
 
 const CourseView = () => {
   const [course, setCourse] = useState({});
@@ -17,10 +18,10 @@ const CourseView = () => {
   const [videoRemoving, setVideoRemoving] = useState(false);
 
   const [progress, setProgress] = useState(0);
-  const [uploadButtonText, setUploadButtonText] = useState('Upload Video');
+  const [uploadButtonText, setUploadButtonText] = useState("Upload Video");
   const [values, setValues] = useState({
-    title: '',
-    content: '',
+    title: "",
+    content: "",
     video: {},
   });
   const router = useRouter();
@@ -37,22 +38,22 @@ const CourseView = () => {
       const { data } = await axios.get(`/api/course/${slug}`);
       setCourse(data);
     } catch (error) {
-      toast.dark('Problem in fetching course');
+      toast.dark("Problem in fetching course");
     }
   };
 
-  const handleVideoUpload = async e => {
+  const handleVideoUpload = async (e) => {
     let file = e.target.files[0];
     try {
       setUploading(true);
       const videoData = new FormData();
-      videoData.append('video', file);
+      videoData.append("video", file);
 
       const { data } = await axios.post(
         `/api/course/upload-video/${course.instructor._id}`,
         videoData,
         {
-          onUploadProgress: e => {
+          onUploadProgress: (e) => {
             setProgress(Math.round((100 * e.loaded) / e.total));
           },
         }
@@ -63,7 +64,7 @@ const CourseView = () => {
     } catch (error) {
       setUploading(false);
       setProgress(0);
-      toast.error('Video upload failed');
+      toast.error("Video upload failed");
     }
   };
 
@@ -79,15 +80,15 @@ const CourseView = () => {
       setValues({ ...values, video: {} });
       setProgress(0);
       setVideoRemoving(false);
-      setUploadButtonText('Upload Video');
+      setUploadButtonText("Upload Video");
     } catch (error) {
       setVideoRemoving(false);
       setProgress(0);
-      toast.dark('Video remove failed');
+      toast.dark("Video remove failed");
     }
   };
 
-  const handleAddLesson = async e => {
+  const handleAddLesson = async (e) => {
     e.preventDefault();
     try {
       setSavingLesson(true);
@@ -95,15 +96,15 @@ const CourseView = () => {
         `/api/course/lesson/${slug}/${course.instructor._id}`,
         values
       );
-      setValues({ ...values, title: '', content: '', video: {} });
+      setValues({ ...values, title: "", content: "", video: {} });
       setVisible(false);
       setSavingLesson(false);
-      setUploadButtonText('Upload video');
+      setUploadButtonText("Upload video");
       setCourse(data);
-      toast.dark('Lesson added');
+      toast.dark("Lesson added");
     } catch (error) {
       setSavingLesson(false);
-      toast.dark('Lesson add failed, Try again');
+      toast.dark("Lesson add failed, Try again");
     }
   };
 
@@ -118,7 +119,7 @@ const CourseView = () => {
                 src={
                   course.image
                     ? course.image.Location
-                    : '/no-image-available.png'
+                    : "/no-image-available.png"
                 }
               />
 
@@ -126,10 +127,10 @@ const CourseView = () => {
                 <div className='row'>
                   <div className='col'>
                     <h5 className='mt-2 text-primary'>{course.name}</h5>
-                    <p style={{ marginTop: '-10px' }}>
+                    <p style={{ marginTop: "-10px" }}>
                       {course.lessons && course.lessons.length} Lessons
                     </p>
-                    <p style={{ marginTop: '-15px', fontSize: '10px' }}>
+                    <p style={{ marginTop: "-15px", fontSize: "10px" }}>
                       {course.category}
                     </p>
                   </div>

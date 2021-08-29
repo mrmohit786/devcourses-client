@@ -65,7 +65,7 @@ const AddLessonForm = ({
           className='col mt-3'
           size='large'
           type='primary'
-          disabled={!values.title || !values.content || isEmpty(values.video)}
+          disabled={!values.title}
           loading={uploading || videoRemoving || savingLesson}
           shape='round'
         >

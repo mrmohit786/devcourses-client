@@ -35,6 +35,7 @@ const Header = () => {
       toast.dark(response.data.message);
       router.push('/login');
     } catch (error) {
+      console.log(error);
       toast.dark(error?.response?.data?.error || 'Something went wrong');
     }
   };

@@ -1,23 +1,23 @@
-import { SyncOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../context';
-import UserNav from '../nav/UserNav';
+import { SyncOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../../context";
+import UserNav from "../nav/UserNav";
 
-const UserRoute = ({ children }) => {
+const UserRoute = ({ children, showNav = true }) => {
   const router = useRouter();
   const [ok, setOk] = useState(false);
 
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get('/api/current-user');
+      const { data } = await axios.get("/api/current-user");
       if (data.ok) {
         setOk(true);
       }
     } catch (error) {
       setOk(false);
-      router.push('/login');
+      router.push("/login");
     }
   };
 
@@ -35,10 +35,12 @@ const UserRoute = ({ children }) => {
       ) : (
         <div className='container-fluid'>
           <div className='row'>
-            <div className='col-md-2'>
-              <UserNav />
-            </div>
-            <div className='col-md-10'>{children}</div>
+            {showNav && (
+              <div className='col-md-2'>
+                <UserNav />
+              </div>
+            )}
+            <div className={`col-md-${showNav ? "10" : "12"}`}>{children}</div>
           </div>
         </div>
       )}

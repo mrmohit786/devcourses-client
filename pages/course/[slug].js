@@ -6,6 +6,7 @@ import SingleCourseLesson from "../../components/cards/SingleCourseLesson";
 import { Context } from "../../context";
 import { toast } from "react-toastify";
 import router from "next/router";
+import { loadStripe } from "@stripe/stripe-js";
 
 const SingleCourse = ({ course }) => {
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +18,26 @@ const SingleCourse = ({ course }) => {
     state: { user },
   } = useContext(Context);
 
-  const handlePaidEnrollment = () => {};
+  const handlePaidEnrollment = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      if (!user) {
+        router.push("/login");
+      }
+      if (enrolled.status) {
+        return router.push(`/user/course/${enrolled.course.slug}`);
+      }
+
+      const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+      stripe.redirectToCheckout({ sessionId: data });
+    } catch (error) {
+      toast.dark("Enrollment failed, try again.");
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   const handleFreeEnrollment = async (e) => {
     e.preventDefault();
@@ -25,16 +45,14 @@ const SingleCourse = ({ course }) => {
       if (!user) {
         router.push("/login");
       }
-
       if (enrolled.status) {
         return router.push(`/user/course/${enrolled.course.slug}`);
       }
-
       setLoading(true);
       const { data } = await axios.post(`/api/free-enrollment/${course._id}`);
       toast.dark(data.message);
-      return router.push(`/user/course/${data.course.slug}`);
       setLoading(false);
+      return router.push(`/user/course/${data.course.slug}`);
     } catch (error) {
       toast.dark("Enrollment failed, Try again");
       setLoading(false);

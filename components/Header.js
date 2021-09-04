@@ -1,4 +1,4 @@
-import { Menu } from 'antd';
+import { Menu } from "antd";
 import {
   AppstoreOutlined,
   CarryOutOutlined,
@@ -7,18 +7,18 @@ import {
   LogoutOutlined,
   TeamOutlined,
   UserAddOutlined,
-} from '@ant-design/icons';
-import Link from 'next/link';
-import { useEffect, useState, useContext } from 'react';
-import { Context } from '../context';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+} from "@ant-design/icons";
+import Link from "next/link";
+import { useEffect, useState, useContext } from "react";
+import { Context } from "../context";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 const { Item, SubMenu, ItemGroup } = Menu;
 
 const Header = () => {
-  const [current, setCurrent] = useState('');
+  const [current, setCurrent] = useState("");
   const { state, dispatch } = useContext(Context);
   const { user } = state;
   const router = useRouter();
@@ -29,14 +29,14 @@ const Header = () => {
 
   const logout = async () => {
     try {
-      dispatch({ type: 'LOGOUT' });
-      window.localStorage.removeItem('user');
+      dispatch({ type: "LOGOUT" });
+      window.localStorage.removeItem("user");
       const response = await axios.get(`api/logout`);
       toast.dark(response.data.message);
-      router.push('/login');
+      router.push("/login");
     } catch (error) {
       console.log(error);
-      toast.dark(error?.response?.data?.error || 'Something went wrong');
+      toast.dark(error?.response?.data?.error || "Something went wrong");
     }
   };
 
@@ -44,86 +44,89 @@ const Header = () => {
     <Menu className='mb-2' mode='horizontal' selectedKeys={[current]}>
       <Item
         key='/'
-        onClick={e => setCurrent(e.key)}
+        onClick={(e) => setCurrent(e.key)}
         icon={<AppstoreOutlined />}
       >
         <Link href='/'>
           <a>App</a>
         </Link>
       </Item>
-      {user &&
-        (user?.role && user.role.includes('Instructor') ? (
-          <Item
-            key='/instructor/course/create'
-            onClick={e => setCurrent(e.key)}
-            icon={<CarryOutOutlined />}
-          >
-            <Link href='/instructor/course/create'>
-              <a>Create Course</a>
-            </Link>
-          </Item>
-        ) : (
-          <Item
-            key='/user/become-instructor'
-            className='float-right'
-            onClick={e => setCurrent(e.key)}
-            icon={<TeamOutlined />}
-          >
-            <Link href='/user/become-instructor'>
-              <a>Become Instructor</a>
-            </Link>
-          </Item>
-        ))}
-      {user?.role?.includes('Instructor') && (
+
+      {user && user.role && user.role.includes("Instructor") ? (
         <Item
-          key='/instructor'
-          onClick={e => setCurrent(e.key)}
+          key='/instructor/course/create'
+          onClick={(e) => setCurrent(e.key)}
           icon={<CarryOutOutlined />}
         >
-          <Link href='/instructor'>
-            <a>Instructor</a>
+          <Link href='/instructor/course/create'>
+            <a>Create Course</a>
+          </Link>
+        </Item>
+      ) : (
+        <Item
+          key='/user/become-instructor'
+          onClick={(e) => setCurrent(e.key)}
+          icon={<TeamOutlined />}
+        >
+          <Link href='/user/become-instructor'>
+            <a>Become Instructor</a>
           </Link>
         </Item>
       )}
-      {user === null ? (
+
+      {user === null && (
         <>
           <Item
-            key='/login'
-            onClick={e => setCurrent(e.key)}
-            icon={<LoginOutlined />}
-          >
-            <Link href='/login'>
-              <a>Login</a>
-            </Link>
-          </Item>
-          <Item
+            className='float-right'
             key='/register'
-            onClick={e => setCurrent(e.key)}
+            onClick={(e) => setCurrent(e.key)}
             icon={<UserAddOutlined />}
           >
             <Link href='/register'>
               <a>Register</a>
             </Link>
           </Item>
+
+          <Item
+            className='float-right'
+            key='/login'
+            onClick={(e) => setCurrent(e.key)}
+            icon={<LoginOutlined />}
+          >
+            <Link href='/login'>
+              <a>Login</a>
+            </Link>
+          </Item>
         </>
-      ) : (
+      )}
+
+      {user !== null && (
         <SubMenu
           icon={<CoffeeOutlined />}
-          title={user.name}
-          className='float-right'
-          key='profile'
+          title={user && user.name}
+          className='ml-auto'
         >
           <ItemGroup>
-            <Item key='user'>
+            <Item key='/user'>
               <Link href='/user'>
                 <a>Dashboard</a>
               </Link>
             </Item>
-            <Item key='logout' onClick={logout}>
-              Logout
-            </Item>
+            <Item onClick={logout}>Logout</Item>
           </ItemGroup>
         </SubMenu>
+      )}
+
+      {user && user.role && user.role.includes("Instructor") && (
+        <Item
+          key='/instructor'
+          onClick={(e) => setCurrent(e.key)}
+          icon={<TeamOutlined />}
+        >
+          <Link href='/instructor'>
+            <a>Instructor</a>
+          </Link>
+        </Item>
       )}
     </Menu>
   );

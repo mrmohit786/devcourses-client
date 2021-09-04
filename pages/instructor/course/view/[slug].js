@@ -194,20 +194,20 @@ const CourseView = () => {
 
                     {course.lessons && course.lessons.length < 5 ? (
                       <Tooltip title='Min 5 lessons required to publish'>
-                        <QuestionOutlined className='h4 pointer text-danger' />
+                        <QuestionOutlined className='h4 cursor-pointer text-danger' />
                       </Tooltip>
                     ) : course.published ? (
                       <Tooltip title='Unpublish'>
                         <CloseOutlined
                           onClick={(e) => handleUnpublish(e, course._id)}
-                          className='h4 pointer text-danger'
+                          className='h4 cursor-pointer text-danger'
                         />
                       </Tooltip>
                     ) : (
                       <Tooltip title='Publish'>
                         <CheckOutlined
                           onClick={(e) => handlePublish(e, course._id)}
-                          className='h4 pointer text-success'
+                          className='h4 cursor-pointer text-success'
                         />
                       </Tooltip>
                     )}

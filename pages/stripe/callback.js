@@ -19,7 +19,7 @@ const StripeCallback = () => {
         window.location.href = '/instructor';
       });
     }
-  }, [user]);
+  }, [dispatch, user]);
   return (
     <SyncOutlined
       spin

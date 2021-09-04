@@ -65,11 +65,11 @@ const InstructorIndex = () => {
                   <div className='col-md-3 mt-3 text-center'>
                     {course.published ? (
                       <Tooltip title="Published">
-                        <CheckCircleOutlined className='h5 pointer text-success' />
+                        <CheckCircleOutlined className='h5 cursor-pointer text-success' />
                       </Tooltip>
                     ) : (
                       <Tooltip title="Unpublished">
-                        <CloseCircleOutlined className='h5 pointer text-warning' />
+                        <CloseCircleOutlined className='h5 cursor-pointer text-warning' />
                       </Tooltip>
                     )}
                   </div>

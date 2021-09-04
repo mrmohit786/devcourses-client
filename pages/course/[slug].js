@@ -23,7 +23,7 @@ const SingleCourse = ({ course }) => {
     try {
       setLoading(true);
       if (!user) {
-        router.push("/login");
+        return router.push("/login");
       }
       if (enrolled.status) {
         return router.push(`/user/course/${enrolled.course.slug}`);
@@ -33,7 +33,6 @@ const SingleCourse = ({ course }) => {
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
       stripe.redirectToCheckout({ sessionId: data });
     } catch (error) {
-      toast.dark("Enrollment failed, try again.");
       console.log(error);
       setLoading(false);
     }
@@ -43,7 +42,7 @@ const SingleCourse = ({ course }) => {
     e.preventDefault();
     try {
       if (!user) {
-        router.push("/login");
+        return router.push("/login");
       }
       if (enrolled.status) {
         return router.push(`/user/course/${enrolled.course.slug}`);
@@ -54,7 +53,6 @@ const SingleCourse = ({ course }) => {
       setLoading(false);
       return router.push(`/user/course/${data.course.slug}`);
     } catch (error) {
-      toast.dark("Enrollment failed, Try again");
       setLoading(false);
     }
   };

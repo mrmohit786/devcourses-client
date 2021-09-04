@@ -14,7 +14,6 @@ const SingleCourseJumbotron = ({
   handlePaidEnrollment,
   handleFreeEnrollment,
   enrolled,
-  setEnrolled,
 }) => {
   const {
     name,
@@ -71,28 +70,23 @@ const SingleCourseJumbotron = ({
               <img src={image.Location} alt={name} className='img img-fluid' />
             </>
           )}
-          {loading ? (
-            <div className='d-flex justify-content-center'>
-              <LoadingOutlined className='h1 text-danger' />
-            </div>
-          ) : (
-            <Button
-              className='mb-3 mt-3'
-              type='danger'
-              block
-              size='large'
-              shape='round'
-              icon={<SafetyOutlined />}
-              disabled={loading}
-              onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
-            >
-              {user
-                ? enrolled.status
-                  ? "Go to course"
-                  : "Enroll"
-                : "Login to enroll"}
-            </Button>
-          )}
+          <Button
+            className='mb-3 mt-3'
+            type='danger'
+            block
+            size='large'
+            shape='round'
+            icon={<SafetyOutlined />}
+            disabled={loading}
+            loading={loading}
+            onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
+          >
+            {user
+              ? enrolled.status
+                ? "Go to course"
+                : "Enroll"
+              : "Login to enroll"}
+          </Button>
         </div>
       </div>
     </div>

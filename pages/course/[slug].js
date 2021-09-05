@@ -1,16 +1,16 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import SingleCourseJumbotron from "../../components/cards/SingleCourseJumbotron";
-import PreviewModal from "../../components/modal/PreviewModal";
-import SingleCourseLesson from "../../components/cards/SingleCourseLesson";
-import { Context } from "../../context";
-import { toast } from "react-toastify";
-import router from "next/router";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import router from 'next/router';
+import { loadStripe } from '@stripe/stripe-js';
+import SingleCourseJumbotron from '../../components/cards/SingleCourseJumbotron';
+import PreviewModal from '../../components/modal/PreviewModal';
+import SingleCourseLesson from '../../components/cards/SingleCourseLesson';
+import { Context } from '../../context';
 
 const SingleCourse = ({ course }) => {
   const [showModal, setShowModal] = useState(false);
-  const [preview, setPreview] = useState("");
+  const [preview, setPreview] = useState('');
   const [enrolled, setEnrolled] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,7 @@ const SingleCourse = ({ course }) => {
     try {
       setLoading(true);
       if (!user) {
-        return router.push("/login");
+        return router.push('/login');
       }
       if (enrolled.status) {
         return router.push(`/user/course/${enrolled.course.slug}`);
@@ -42,7 +42,7 @@ const SingleCourse = ({ course }) => {
     e.preventDefault();
     try {
       if (!user) {
-        return router.push("/login");
+        return router.push('/login');
       }
       if (enrolled.status) {
         return router.push(`/user/course/${enrolled.course.slug}`);

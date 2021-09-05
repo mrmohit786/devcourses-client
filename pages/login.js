@@ -3,8 +3,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { Context } from '../context';
 import { useRouter } from 'next/router';
+import { Context } from '../context';
 
 const Login = () => {
   const {
@@ -22,11 +22,11 @@ const Login = () => {
     }
   }, [user]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await axios.post(`api/login`, {
+      const response = await axios.post('api/login', {
         email,
         password,
       });
@@ -45,45 +45,47 @@ const Login = () => {
 
   return (
     <>
-      <h1 className='jumbotron text-center bg-primary'>Login</h1>
-      <div className='container col-md-4 offset-md-4 pb-5'>
+      <h1 className="jumbotron text-center bg-primary">Login</h1>
+      <div className="container col-md-4 offset-md-4 pb-5">
         <form onSubmit={handleSubmit}>
           <input
-            type='email'
-            className='form-control mb-4 p-4'
+            type="email"
+            className="form-control mb-4 p-4"
             value={email}
-            placeholder='Enter Email'
+            placeholder="Enter Email"
             required
-            onChange={e => setEmail(e.target.value)}
-            id='email'
+            onChange={(e) => setEmail(e.target.value)}
+            id="email"
           />
           <input
-            type='password'
-            className='form-control mb-4 p-4'
+            type="password"
+            className="form-control mb-4 p-4"
             value={password}
-            placeholder='Enter Password'
+            placeholder="Enter Password"
             required
-            onChange={e => setPassword(e.target.value)}
-            id='password'
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
           />
           <button
-            className='btn btn-primary btn-block'
-            type='submit'
+            className="btn btn-primary btn-block"
+            type="submit"
             disabled={!email || !password || loading}
           >
             {loading ? <SyncOutlined spin /> : 'Login'}
           </button>
         </form>
-        <p className='text-center p-3'>
-          Not yet registered?{' '}
-          <Link href='/register'>
+        <p className="text-center p-3">
+          Not yet registered?
+          {' '}
+          <Link href="/register">
             <a>Register</a>
           </Link>
         </p>
-        <p className='text-center'>
-          Forgot password?{' '}
-          <Link href='/forgot-password'>
-            <a className='text-danger'>Reset here</a>
+        <p className="text-center">
+          Forgot password?
+          {' '}
+          <Link href="/forgot-password">
+            <a className="text-danger">Reset here</a>
           </Link>
         </p>
       </div>

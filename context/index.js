@@ -35,32 +35,31 @@ const Provider = ({ children }) => {
   }, []);
 
   axios.interceptors.response.use(
-    response => {
+    (response) =>
       // any status code that lie within the range of 2XX cause this function to trigger
-      return response;
-    },
-    error => {
+      response,
+    (error) => {
       // any status code that falls outside the range of 2x cause this function to trigger
-      let res = error.response;
+      const res = error.response;
       if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
         return new Promise((resolve, reject) => {
           axios
             .get('/api/logout')
-            .then(data => {
+            .then((data) => {
               console.log('/401 error> logout');
               dispatch({ type: 'LOGOUT' });
               window.localStorage.removeItem('user');
               router.push('/login');
               resolve(data);
             })
-            .catch(err => {
+            .catch((err) => {
               console.log('AXIOS INTERCEPTORS ERROR', err);
               reject(err);
             });
         });
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   useEffect(() => {

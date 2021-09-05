@@ -1,5 +1,6 @@
-import { Avatar, List } from "antd";
-import React from "react";
+import { Avatar, List } from 'antd';
+import React from 'react';
+
 const { Item } = List;
 
 const SingleCourseLesson = ({
@@ -8,14 +9,20 @@ const SingleCourseLesson = ({
   showModal,
   setShowModal,
 }) => (
-  <div className='container'>
-    <div className='row'>
-      <div className='col lesson-list'>
-        {lessons && <h4>{lessons.length} Lessons</h4>}
+  <div className="container">
+    <div className="row">
+      <div className="col lesson-list">
+        {lessons && (
+        <h4>
+          {lessons.length}
+          {' '}
+          Lessons
+        </h4>
+        )}
 
         <hr />
         <List
-          itemLayout='horizontal'
+          itemLayout="horizontal"
           dataSource={lessons}
           renderItem={(item, index) => (
             <Item>
@@ -25,7 +32,7 @@ const SingleCourseLesson = ({
               />
               {item.video && item.video !== null && item.free_preview && (
                 <span
-                  className='text-primary cursor-pointer'
+                  className="text-primary cursor-pointer"
                   onClick={() => {
                     setPreview(item.video.Location);
                     setShowModal(!showModal);

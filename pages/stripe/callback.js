@@ -10,7 +10,7 @@ const StripeCallback = () => {
   } = useContext(Context);
   useEffect(() => {
     if (user) {
-      axios.post('/api/get-account-status').then(res => {
+      axios.post('/api/get-account-status').then((res) => {
         dispatch({
           type: 'LOGIN',
           payload: res.data,
@@ -23,7 +23,7 @@ const StripeCallback = () => {
   return (
     <SyncOutlined
       spin
-      className='d-flex justify-content-center display-1 text-danger p-5'
+      className="d-flex justify-content-center display-1 text-danger p-5"
     />
   );
 };

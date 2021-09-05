@@ -3,8 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { Context } from '../context';
 import { useRouter } from 'next/router';
+import { Context } from '../context';
 
 const ForgotPassword = () => {
   const {
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
   const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleResetPassword = async e => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -55,47 +55,47 @@ const ForgotPassword = () => {
   };
   return (
     <>
-      <h1 className='jumbotron text-center bg-primary square'>
+      <h1 className="jumbotron text-center bg-primary square">
         Forgot Password
       </h1>
-      <div className='container col-md-4 offset-md-4 pb-5'>
+      <div className="container col-md-4 offset-md-4 pb-5">
         <form onSubmit={success ? handleResetPassword : handleSubmit}>
           <input
-            type='email'
-            className='form-control mb-4 p-4'
+            type="email"
+            className="form-control mb-4 p-4"
             value={email}
-            placeholder='Enter Email'
+            placeholder="Enter Email"
             required
             disabled={success && email}
-            onChange={e => setEmail(e.target.value)}
-            id='email'
+            onChange={(e) => setEmail(e.target.value)}
+            id="email"
           />
           {success && (
             <>
               <input
-                type='text'
-                className='form-control mb-4 p-4'
+                type="text"
+                className="form-control mb-4 p-4"
                 value={code}
-                placeholder='Enter secret code'
+                placeholder="Enter secret code"
                 required
-                onChange={e => setCode(e.target.value)}
-                id='code'
+                onChange={(e) => setCode(e.target.value)}
+                id="code"
               />
               <input
-                type='password'
-                className='form-control mb-4 p-4'
+                type="password"
+                className="form-control mb-4 p-4"
                 value={newPassword}
-                placeholder='Enter new password'
+                placeholder="Enter new password"
                 required
-                onChange={e => setNewPassword(e.target.value)}
-                id='password'
+                onChange={(e) => setNewPassword(e.target.value)}
+                id="password"
               />
             </>
           )}
           <button
             disabled={loading || !email}
-            type='submit'
-            className='btn btn-block btn-primary p-2'
+            type="submit"
+            className="btn btn-block btn-primary p-2"
           >
             {loading ? <SyncOutlined spin /> : 'Submit'}
           </button>

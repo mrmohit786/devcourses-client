@@ -1,9 +1,9 @@
-import { SyncOutlined } from "@ant-design/icons";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import UserRoute from "../../../components/routes/userRoute";
+import { SyncOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import UserRoute from '../../../components/routes/userRoute';
 
 const success = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ const success = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.dark("Success failed");
+      toast.dark('Success failed');
     }
   };
 
@@ -27,10 +27,10 @@ const success = () => {
 
   return (
     <UserRoute showNav={false}>
-      <div className='row text-center'>
-        <div className='col-md-9 pb-5'>
-          <div className='d-flex justify-content-center p-5'>
-            <SyncOutlined spin className='display-1 text-danger p-5' />
+      <div className="row text-center">
+        <div className="col-md-9 pb-5">
+          <div className="d-flex justify-content-center p-5">
+            <SyncOutlined spin className="display-1 text-danger p-5" />
           </div>
         </div>
       </div>

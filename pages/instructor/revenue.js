@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import InstructorRoute from "../../components/routes/InstructorRoute";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   DollarOutlined,
   SettingOutlined,
   SyncOutlined,
-} from "@ant-design/icons";
-import { stripeCurrencyFormatter } from "../../utils/helper";
+} from '@ant-design/icons';
+import InstructorRoute from '../../components/routes/InstructorRoute';
+import { stripeCurrencyFormatter } from '../../utils/helper';
 
 const InstructorRevenue = () => {
   const [balance, setBalance] = useState({ pending: [] });
@@ -17,19 +17,19 @@ const InstructorRevenue = () => {
   }, []);
 
   const sendBalanceRequest = async () => {
-    const { data } = await axios.get("/api/instructor/balance");
+    const { data } = await axios.get('/api/instructor/balance');
     setBalance(data);
   };
 
   const handlePayoutSettings = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("/api/instructor/payout-settings");
+      const { data } = await axios.get('/api/instructor/payout-settings');
       window.location.href = data;
     } catch (err) {
       setLoading(false);
       console.log(err);
-      alert("Unable to access payout settings. Try later.");
+      alert('Unable to access payout settings. Try later.');
     }
   };
 
@@ -39,7 +39,10 @@ const InstructorRevenue = () => {
         <div className="row pt-2">
           <div className="col-md-8 offset-md-2 bg-light p-5">
             <h2>
-              Revenue report <DollarOutlined className="float-right" />{" "}
+              Revenue report
+              {' '}
+              <DollarOutlined className="float-right" />
+              {' '}
             </h2>
             <small>
               You get paid directly from stripe to your bank account every 48
@@ -48,8 +51,8 @@ const InstructorRevenue = () => {
             <hr />
             <h4>
               Pending balance
-              {balance.pending &&
-                balance.pending.map((bp, i) => (
+              {balance.pending
+                && balance.pending.map((bp, i) => (
                   <span key={i} className="float-right">
                     {stripeCurrencyFormatter(bp)}
                   </span>
@@ -58,7 +61,8 @@ const InstructorRevenue = () => {
             <small>For last 48 hours</small>
             <hr />
             <h4>
-              Payouts{" "}
+              Payouts
+              {' '}
               {!loading ? (
                 <SettingOutlined
                   className="float-right pointer"

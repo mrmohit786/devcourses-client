@@ -16,21 +16,19 @@ app
         createProxyMiddleware({
           target: 'http://localhost:8080',
           changeOrigin: true,
-        })
+        }),
       );
     }
 
-    server.all('*', (req, res) => {
-      return handle(req, res);
-    });
+    server.all('*', (req, res) => handle(req, res));
 
-    server.listen(3000, err => {
+    server.listen(3000, (err) => {
       if (err) {
         throw err;
       }
       console.log('Ready on http://localhost:3000');
     });
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(error);
   });

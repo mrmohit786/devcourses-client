@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import InstructorRoute from '../../../components/routes/InstructorRoute';
-import CourseCreateForm from '../../../components/forms/CourseCreateForm';
 import ImageResizer from 'react-image-file-resizer';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { message } from 'antd';
 import { useRouter } from 'next/router';
+import CourseCreateForm from '../../../components/forms/CourseCreateForm';
+import InstructorRoute from '../../../components/routes/InstructorRoute';
 
 const CourseCreate = () => {
-  const [values, setValues] = useState({  
+  const [values, setValues] = useState({
     name: '',
     description: '',
-    price: '100.99',  
+    price: '100.99',
     uploading: false,
     paid: false,
     loading: false,
@@ -23,15 +23,15 @@ const CourseCreate = () => {
   const [uploadButtonText, setUploadButtonText] = useState('Upload Image');
   const router = useRouter();
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleImageUpload = e => {
+  const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const key = 'handleImageUpload';
     setValues({ ...values, loading: true });
-    ImageResizer.imageFileResizer(file, 720, 500, 'JPEG', 100, 0, async uri => {
+    ImageResizer.imageFileResizer(file, 720, 500, 'JPEG', 100, 0, async (uri) => {
       try {
         message.loading({ content: 'Uploading...', key });
         const { data } = await axios.post('/api/course/upload-image', {
@@ -50,7 +50,7 @@ const CourseCreate = () => {
     });
   };
 
-  const handleImageRemove = async e => {
+  const handleImageRemove = async (e) => {
     e.preventDefault();
     const key = 'handleImageRemove';
     try {
@@ -69,7 +69,7 @@ const CourseCreate = () => {
     }
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post('/api/course', {
@@ -85,8 +85,8 @@ const CourseCreate = () => {
 
   return (
     <InstructorRoute>
-      <h1 className='jumbotron text-center bg-primary'>Create Course</h1>
-      <div className='pt-3 pb-3'>
+      <h1 className="jumbotron text-center bg-primary">Create Course</h1>
+      <div className="pt-3 pb-3">
         <CourseCreateForm
           values={values}
           preview={preview}

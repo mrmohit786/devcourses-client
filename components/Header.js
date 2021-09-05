@@ -3,7 +3,7 @@ import {
   AppstoreOutlined,
   CarryOutOutlined,
   CoffeeOutlined,
-  LoginOutlined,
+  LoginOutlined, 
   LogoutOutlined,
   TeamOutlined,
   UserAddOutlined,
@@ -25,6 +25,7 @@ const Header = () => {
 
   useEffect(() => {
     process.browser && setCurrent(window.location.pathname);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [process.browser && window.location.pathname]);
 
   const logout = async () => {
@@ -41,14 +42,14 @@ const Header = () => {
   };
 
   return (
-    <Menu className='mb-2' mode='horizontal' selectedKeys={[current]}>
+    <Menu theme="dark" className='mb-2' mode='horizontal' selectedKeys={[current]}>
       <Item
         key='/'
         onClick={(e) => setCurrent(e.key)}
         icon={<AppstoreOutlined />}
       >
         <Link href='/'>
-          <a>App</a>
+          <a>DevCourses</a>
         </Link>
       </Item>
 

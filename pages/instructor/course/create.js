@@ -8,10 +8,10 @@ import { message } from 'antd';
 import { useRouter } from 'next/router';
 
 const CourseCreate = () => {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState({  
     name: '',
     description: '',
-    price: '100.99',
+    price: '100.99',  
     uploading: false,
     paid: false,
     loading: false,

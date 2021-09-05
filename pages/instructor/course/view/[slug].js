@@ -4,6 +4,7 @@ import {
   EditOutlined,
   QuestionOutlined,
   UploadOutlined,
+  UserSwitchOutlined
 } from "@ant-design/icons";
 import { Avatar, Button, Tooltip, Modal, List } from "antd";
 import axios from "axios";
@@ -22,6 +23,7 @@ const CourseView = () => {
   const [uploading, setUploading] = useState(false);
   const [savingLesson, setSavingLesson] = useState(false);
   const [videoRemoving, setVideoRemoving] = useState(false);
+  const [students, setStudents] = useState(0);
 
   const [progress, setProgress] = useState(0);
   const [uploadButtonText, setUploadButtonText] = useState("Upload Video");
@@ -34,19 +36,35 @@ const CourseView = () => {
   const { slug } = router.query;
 
   useEffect(() => {
+    const loadCourse = async () => {
+      try {
+        const { data } = await axios.get(`/api/course/${slug}`);
+        setCourse(data);
+      } catch (error) {
+        toast.dark("Problem in fetching course");
+      }
+    };
     if (slug) {
       loadCourse();
     }
   }, [slug]);
 
-  const loadCourse = async () => {
-    try {
-      const { data } = await axios.get(`/api/course/${slug}`);
-      setCourse(data);
-    } catch (error) {
-      toast.dark("Problem in fetching course");
+  useEffect(() => {
+    const studentCount = async () => {
+      try {
+        const { data } = await axios.post(`/api/instructor/student-count`, {
+          courseId: course._id,
+        });
+        setStudents(data.length);
+      } catch (error) {
+        toast.dark("Problem in fetching student count");
+      }
+    };
+    if (slug && course._id) {
+      studentCount();
     }
-  };
+  }, [course._id, slug]);
+ 
 
   const handleVideoUpload = async (e) => {
     let file = e.target.files[0];
@@ -183,6 +201,11 @@ const CourseView = () => {
                     </p>
                   </div>
                   <div className='d-flex pt-4'>
+                  <Tooltip title={`${students} Enrolled`}>
+                      <UserSwitchOutlined
+                        className='h5 cursor-pointer text-info mr-4'
+                      />
+                    </Tooltip>
                     <Tooltip title='Edit'>
                       <EditOutlined
                         onClick={() =>
